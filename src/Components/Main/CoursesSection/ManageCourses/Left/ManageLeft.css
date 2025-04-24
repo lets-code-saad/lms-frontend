@@ -1,0 +1,50 @@
+.active {
+  background-color: #F2F3FF !important;
+  position: relative;
+  border-radius: 8px;
+  /* border-bottom: 4px solid #4A6CF7; */
+   color:black!important;
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0px;
+  width: 4px;
+  height: 100%;
+  background-color: #4A6CF7;
+}
+
+/* RESPONSIVENESS */
+
+/* Extra small devices (portrait phones) */
+@media (max-width: 575.98px) {
+.manageCourseDiv{
+display: none!important;
+}
+.courseManagerDivider{
+  display: none!important;
+}
+}
+
+/* Small devices (landscape phones) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+.manageCourseDiv{
+display: none!important;
+}
+.courseManagerDivider{
+  display: none!important;
+}
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+.manageCourseDiv{
+display: none!important;
+}
+.courseManagerDivider{
+  display: none!important;
+}
+}
+

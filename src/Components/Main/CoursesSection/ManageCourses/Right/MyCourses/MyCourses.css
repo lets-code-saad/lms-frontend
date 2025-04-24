@@ -1,0 +1,52 @@
+.spinner-button {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 0.8s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* RESPONSIVENESS */
+
+/* Extra small devices (portrait phones) */
+@media (max-width: 575.98px) {
+  .MyCoursesDiv {
+    margin: 0;
+    padding: 0;
+  }
+  .MyCoursesTable {
+    margin: 0;
+    padding: 0;
+  }
+  .iffNoCourseAddCourse{
+    width:50%!important;
+  }
+}
+
+/* Small devices (landscape phones) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .MyCoursesDiv {
+    .MyCoursesDiv {
+      margin: 0;
+      padding: 0;
+    }
+    .MyCoursesTable {
+      margin: 0;
+      padding: 0;
+    }
+      .iffNoCourseAddCourse{
+    width:50%!important;
+  }
+  }
+}

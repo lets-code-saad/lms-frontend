@@ -1,0 +1,43 @@
+/* RESPONSIVENESS */
+
+/* Extra small devices (portrait phones) */
+@media (max-width: 575.98px) {
+.DashboardDiv{
+    margin: 0;
+    padding: 0;
+   
+}
+.DashboardTable{
+    margin: 0;
+    padding: 0;
+   
+}
+.dashbaordCards{
+   flex-direction: column;
+   align-items: start;
+}
+.dashboardCard1{
+    width:100%;
+}
+}
+
+/* Small devices (landscape phones) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+.DashboardDiv{
+    margin: 0;
+    padding: 0;
+   
+}
+.DashboardTable{
+    margin: 0;
+    padding: 0;
+   
+}
+.dashbaordCards{
+   flex-direction: column;
+   align-items: start;
+}
+.dashboardCard1{
+    width:100%;
+}
+}
