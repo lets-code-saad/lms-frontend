@@ -33,11 +33,6 @@ axiosInterceptor.interceptors.response.use(
         toast.error("Session Expired! Please Login Again", {
           toastId: "expired-session",
         });
-
-        // Redirect after short delay
-        setTimeout(() => {
-          window.location.href = "/signin";
-        }, 1500);
       }
       return Promise.reject(error); // still reject the promise
     }
