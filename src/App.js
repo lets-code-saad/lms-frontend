@@ -8,8 +8,6 @@ import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import SkeletonForLoading from "./Components/SkeletonLoading/SkeletonForAllCards";
 import { Box } from "@mui/material";
-import { CirclesWithBar, InfinitySpin, Oval } from "react-loader-spinner";
-import fetchCourses from "./Components/Store/Thunks/coursesThunk";
 
 function App() {
   const [loading, setLoading] = useState(false)
@@ -34,7 +32,6 @@ function App() {
             background: "#f8f8f8",
           }}
         >
-          {/* <CirclesWithBar height={80} width={80} color="#2563EB" /> */}
           Loading....
         </div>
       ) : (
