@@ -437,9 +437,6 @@ const Signup = () => {
                     />
                   )}
                 />
-                <Typography variant="body2" sx={{ cursor: "pointer" }}>
-                  Forgot Password ?
-                </Typography>
               </Box>
 
               <Box className="text-end">

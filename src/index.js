@@ -15,6 +15,7 @@ import StudentsEnrolled from "./Components/Main/CoursesSection/ManageCourses/Rig
 import SkeletonForCards from "./Components/SkeletonLoading/SkeletonForAllCards.jsx";
 import Signup from "./Components/Auth/Signup/Signup.jsx";
 import Signin from "./Components/Auth/Signin/Signin.jsx";
+import ForgotPass from "./Components/Auth/ForgotPass/ForgotPass.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -32,6 +33,7 @@ root.render(
         <Route path="/skeleton" element={<SkeletonForCards />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/forgot-password" element={<ForgotPass />} />
       </Routes>
     </BrowserRouter>
   </Provider>

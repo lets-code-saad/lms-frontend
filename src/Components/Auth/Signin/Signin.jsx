@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Signin.css";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
@@ -263,9 +263,11 @@ const Signin = () => {
                 mb={3}
               >
                 <FormControlLabel control={<Checkbox />} label="Remember me" />
-                <Typography variant="body2" sx={{ cursor: "pointer" }}>
-                  Forgot Password ?
-                </Typography>
+                <Link to="/forgot-password">
+                  <Typography variant="body2" sx={{ cursor: "pointer" }}>
+                    Forgot Password ?
+                  </Typography>
+                </Link>
               </Box>
 
               <Box className="text-end">
