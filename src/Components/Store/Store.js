@@ -8,6 +8,9 @@ import GetSingleCourse from "./Slices/GetSingleCourse";
 import GetAllCoursesSlice from "./Slices/GetAllCoursesSlice";
 import EnrollCourseSlice from "./Slices/EnrollCourseSlice";
 import UnEnrollCourseSlice from "./Slices/UnEnrollCourseSlice";
+import ForgotPasswordSlice from "./Slices/ForgotPasswordSlice";
+import ResetPasswordSlice from "./Slices/ResetPasswordSlice";
+import DeleteCourseSlice from "./Slices/DeleteCourseSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +23,9 @@ const store = configureStore({
     GetAllCoursesSlice: GetAllCoursesSlice,
     EnrollCourseSlice: EnrollCourseSlice,
     UnEnrollCourseSlice: UnEnrollCourseSlice,
+    ResetPasswordSlice: ResetPasswordSlice,
+    ForgotPasswordSlice: ForgotPasswordSlice,
+    DeleteCourseSlice: DeleteCourseSlice,
   },
 });
 

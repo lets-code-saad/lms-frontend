@@ -2,7 +2,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const axiosInterceptor = axios.create({
-  baseURL: "https://lms-backend-xi-pied.vercel.app",
+  // baseURL: "https://lms-backend-xi-pied.vercel.app",
+  baseURL: "http://localhost:5000",
 });
 
 // add token to every request

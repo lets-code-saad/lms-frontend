@@ -18,7 +18,6 @@ const GetAllCourses = createSlice({
         state.loading = false;
         // payload is not an array, the allCourses inside it is an array
       state.allCourses = action.payload.allCourses;
-      console.log(action)
       state.error = null;
     });
     builder.addCase(getAllCourses.rejected, (state, action) => {

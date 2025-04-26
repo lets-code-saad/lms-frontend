@@ -20,17 +20,23 @@ import fetchCourses from "../../../../../Store/Thunks/coursesThunk";
 import "./MyCourses.css";
 import SkeletonForTable from "../../../../../SkeletonLoading/SkeletonForTable";
 import { Link } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModalDeleteCourse from "./ModalDeleteCourse/ModalDeleteCourse";
 
 const MyCourses = () => {
   const dispatch = useDispatch();
   const { courses, loading } = useSelector((state) => state.GetUserCourses);
   // const {loading} = useState((state)=>state.GetCourses)
+console.log(courses, "courses");
 
   useEffect(() => {
-    setTimeout(() => {
       dispatch(fetchCourses());
-    }, 1500);
-  }, []);
+  }, [dispatch]);
+
+  // handling the modal 
+  const [open,setOpen] = useState(false)
+// storing the course id
+const [selectedCourseId, setSelectedCourseId] =useState(null)
 
   return (
     <div>
@@ -52,13 +58,13 @@ const MyCourses = () => {
             >
               <Table aria-label="students enrolled table">
                 <TableHead>
-                  {courses.length === 0 ? (
+                  {courses?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={4} className="text-center">
                         <Box className="d-flex justify-content-center">
-                            <CardMedia
-                              component="img"
-sx={{width:"360px",textAlign:"center"}}
+                          <CardMedia
+                            component="img"
+                            sx={{ width: "360px", textAlign: "center" }}
                             image="/imgs/Nothing found illustration.jpg"
                           />
                         </Box>
@@ -68,21 +74,21 @@ sx={{width:"360px",textAlign:"center"}}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
                             Start by adding your first course!
-                            </Typography>
-                            <Link
-                                            to="/add-course"
-                                            className="text-black text-decoration-none"
-                                          >
-                                            <Button className="iffNoCourseAddCourse bg-blue text-capitalize text-white py-2 px-3 mt-3 fs-15 border-0 w-25">
-                                              Add Course
-                                            </Button>
-                                          </Link>
+                          </Typography>
+                          <Link
+                            to="/add-course"
+                            className="text-black text-decoration-none"
+                          >
+                            <Button className="iffNoCourseAddCourse bg-blue text-capitalize text-white py-2 px-3 mt-3 fs-15 border-0 w-25">
+                              Add Course
+                            </Button>
+                          </Link>
                         </Box>
                       </TableCell>
                     </TableRow>
                   ) : (
                     <TableRow>
-                      <TableCell sx={{ fontWeight: "600", fontSize: "14px" }}>
+                      <TableCell className="numberingColHead" sx={{ fontWeight: "600", fontSize: "14px" }}>
                         #
                       </TableCell>
                       <TableCell sx={{ fontWeight: "600", fontSize: "14px" }}>
@@ -94,27 +100,55 @@ sx={{width:"360px",textAlign:"center"}}
                       <TableCell sx={{ fontWeight: "600", fontSize: "14px" }}>
                         Students
                       </TableCell>
+                      <TableCell sx={{ fontWeight: "600", fontSize: "14px" }}>
+                        Action
+                      </TableCell>
                     </TableRow>
                   )}
                 </TableHead>
                 <TableBody>
-                  {courses.map((student, index) => (
-                    <TableRow key={student.id}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell>
+                  {courses?.map((student, index) => (
+                    <TableRow key={student._id}>
+                      <TableCell className="numberingColData">{index + 1}</TableCell>
+                      <TableCell align="center">
                         <Box display="flex" alignItems="center">
                           <Avatar
                             src={`data:image/${student.thumbnail};base64,${student.thumbnail}`}
                             sx={{ mr: 1 }}
                           />
-                          <Typography>{student.courseTitle}</Typography>
+                          <Typography className="courseTitle">{student.courseTitle}</Typography>
                         </Box>
                       </TableCell>
-                      <TableCell>{student.coursePrice}</TableCell>
-                      <TableCell>{Math.ceil(Math.random() * 100)}</TableCell>
+                      <TableCell align="center">{student.coursePrice}</TableCell>
+                      <TableCell className="text-center">
+                        {student.enrolledStudentCount}
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          onClick={() => {
+                            setOpen(true)
+                            setSelectedCourseId(student._id)
+                          }}
+                          sx={{
+                            boxShadow:"none",
+                            "&:hover": {
+                              backgroundColor: "inherit", // Keeps the normal color on hover
+                              boxShadow: "none", // Removes shadow effect
+                            },
+                          }}
+                        >
+                          <DeleteIcon />
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
+                  {/* calling the delete modal */}
+                  <ModalDeleteCourse
+                    open={open}
+                    courseId={selectedCourseId}
+                    onClose={()=>setOpen(false)}
+                  />
               </Table>
             </TableContainer>
           )}

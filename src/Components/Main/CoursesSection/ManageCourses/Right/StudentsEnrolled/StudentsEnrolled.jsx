@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Table,
@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 const StudentsEnrolled = () => {
   const dispatch = useDispatch();
   const { courses, loading } = useSelector((state) => state.GetUserCourses);
+  const [enrolledStudents, setEnrolledStudents] = useState(null)
 
   useEffect(() => {
     setTimeout(() => {
@@ -97,21 +98,27 @@ const StudentsEnrolled = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {courses.map((student, index) => (
-                    <TableRow key={student.id}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell>
-                        <Box display="flex" alignItems="center">
-                          <Avatar src={student.thumbnail} sx={{ mr: 1 }} />
-                          <Typography>{student.category}</Typography>
-                        </Box>
-                      </TableCell>
-                      <TableCell>{student.courseTitle}</TableCell>
-                      <TableCell>
-                        {new Date(student.createdAt).toLocaleDateString()}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {courses
+                    ?.filter((unique) => unique.enrolledStudents.length > 0)
+                    .map((student, index) => (
+                      <TableRow key={student._id}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>
+                          <Box display="flex" alignItems="center">
+                            <Typography>
+                              {" "}
+                              {student?.enrolledStudents
+                                ?.map((user) => user?.username)
+                                .join(", ")}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>{student.courseTitle}</TableCell>
+                        <TableCell>
+                          {new Date(student.createdAt).toLocaleDateString()}
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>

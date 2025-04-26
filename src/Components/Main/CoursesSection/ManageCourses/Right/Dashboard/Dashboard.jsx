@@ -31,6 +31,13 @@ const Dashboard = () => {
     }, 3000);
   }, []);
 
+  // total price
+  const totalPrice = courses?.reduce((acc, curr) => {
+    const price = Number(curr.coursePrice) || 0;
+    const studentCount = curr.enrolledStudents?.length || 0;
+    return acc + price * studentCount;
+  }, 0);
+
   console.log(courses, "courses");
 
   return (
@@ -44,7 +51,10 @@ const Dashboard = () => {
           <>
             {courses.length === 0 ? (
               <TableRow className="w-100">
-                <TableCell colSpan={4} className="d-flex text-center justify-content-center flex-column">
+                <TableCell
+                  colSpan={4}
+                  className="d-flex text-center justify-content-center flex-column"
+                >
                   <Box className="d-flex justify-content-center">
                     <CardMedia
                       component="img"
@@ -132,7 +142,7 @@ const Dashboard = () => {
                     <Avatar src="/imgs/earning_icon.svg" />
                     <Box className="d-flex flex-column">
                       <Typography className="fs-24" variant="h5">
-                        {"14"}
+                            {totalPrice}  // total price
                       </Typography>
                       <Typography className="text-span fs-15" variant="span">
                         {"Total Earnings"}
@@ -180,24 +190,31 @@ const Dashboard = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {courses.map((student, index) => (
-                          <TableRow key={student.id}>
-                            <TableCell>{index + 1}</TableCell>
-                            <TableCell>
-                              <Box display="flex" alignItems="center">
-                                <Avatar
-                                  src={`data:image/${student.thumbnail};base64,${student.thumbnail}`}
-                                  sx={{ mr: 1 }}
-                                />
-                                <Typography>{student?.courseTitle}</Typography>
-                              </Box>
-                            </TableCell>
-                            <TableCell>{student.courseTitle}</TableCell>
-                            <TableCell>
-                              {new Date(student.createdAt).toLocaleDateString()}
-                            </TableCell>
-                          </TableRow>
-                        ))}
+                        {courses
+                          .filter(
+                            (uniquie) => uniquie.enrolledStudents.length > 0
+                          )
+                          .map((student, index) => (
+                            <TableRow key={student.id}>
+                              <TableCell>{index + 1}</TableCell>
+                              <TableCell>
+                                <Box display="flex" alignItems="center">
+                                  <Typography>
+                                    {" "}
+                                    {student?.enrolledStudents
+                                      ?.map((user) => user?.username)
+                                      .join(", ")}
+                                  </Typography>
+                                </Box>
+                              </TableCell>
+                              <TableCell>{student.courseTitle}</TableCell>
+                              <TableCell>
+                                {new Date(
+                                  student.createdAt
+                                ).toLocaleDateString()}
+                              </TableCell>
+                            </TableRow>
+                          ))}
                       </TableBody>
                     </Table>
                   </TableContainer>

@@ -25,9 +25,18 @@
     margin: 0;
     padding: 0;
   }
+  .numberingColHead{
+    display: none!important;
+  }
+  .numberingColData{
+    display: none!important;
+  }
   .MyCoursesTable {
     margin: 0;
     padding: 0;
+  }
+    .courseTitle{
+    display: none!important;
   }
   .iffNoCourseAddCourse{
     width:50%!important;
@@ -47,6 +56,15 @@
     }
       .iffNoCourseAddCourse{
     width:50%!important;
+  }
+    .numberingColHead{
+    display: none!important;
+  }
+  .numberingColData{
+    display: none!important;
+  }
+  .courseTitle{
+    display: none!important;
   }
   }
 }

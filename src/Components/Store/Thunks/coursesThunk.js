@@ -6,7 +6,7 @@ import axiosInterceptor from "../../../Middlewares/axiosInterceptor";
 const fetchCourses = createAsyncThunk("courses/fetchCourses", async () => {
   try {
     const res = await axiosInterceptor.get("/instructor/getCourses");
-    return res?.data?.products;
+    return res?.data?.yourCourses;
   } catch (error) {
     throw error; // this will make rejected case work properly
   }

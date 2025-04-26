@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import SkeletonForLoading from "./Components/SkeletonLoading/SkeletonForAllCards";
 import { Box } from "@mui/material";
+import { ScaleLoader } from "react-spinners";
 
 function App() {
   const [loading, setLoading] = useState(false)
@@ -32,7 +33,7 @@ function App() {
             background: "#f8f8f8",
           }}
         >
-          Loading....
+          <ScaleLoader color="#2563EB" />
         </div>
       ) : (
         <Box>

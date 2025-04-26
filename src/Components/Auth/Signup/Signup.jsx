@@ -217,7 +217,7 @@ const Signup = () => {
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box>
-              {/* email */}
+              {/* username */}
               <Box>
                 <Typography variant="subtitle2" mb={1}>
                   User name
