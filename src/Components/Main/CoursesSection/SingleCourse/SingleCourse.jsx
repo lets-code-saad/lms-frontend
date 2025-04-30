@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axiosInterceptor from "../../../../Middlewares/axiosInterceptor";
 import singleCourse from "../../../Store/Thunks/singleCourseThunk";
-import SkeletonForLoading from "../../../SkeletonLoading/SkeletonForAllCards";
 import SkeletonForSingle from "../../../SkeletonLoading/SkeletonForSingle";
 import enrollCourse from "../../../Store/Thunks/enrollCourse";
 

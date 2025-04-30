@@ -19,6 +19,7 @@ import enrollCourse from "../../../../../Store/Thunks/enrollCourse";
 import { toast, ToastContainer } from "react-toastify";
 import unEnrollCourse from "../../../../../Store/Thunks/unEnrollCourse";
 import authToProfile from "../../../../../Store/Thunks/getProfileThunk";
+import fetchCourses from "../../../../../Store/Thunks/coursesThunk";
 
 const ModalEnroll = (props) => {
   // restructuring props
@@ -44,6 +45,7 @@ const ModalEnroll = (props) => {
       toast.success("Enrolled Successfully!");
       // refreshes the page after enrolling
       dispatch(authToProfile())
+      dispatch(fetchCourses())
       onClose();
     } catch (error) {}
   };
@@ -56,6 +58,7 @@ const ModalEnroll = (props) => {
       toast.success("Unenrolled Successfully!");
       // refreshes the page after unenrolling
       dispatch(authToProfile())
+      dispatch(fetchCourses())
       onClose();
     } catch (error) {}
   };

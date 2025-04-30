@@ -16,6 +16,8 @@ import SkeletonForCards from "./Components/SkeletonLoading/SkeletonForAllCards.j
 import Signup from "./Components/Auth/Signup/Signup.jsx";
 import Signin from "./Components/Auth/Signin/Signin.jsx";
 import ForgotPass from "./Components/Auth/ForgotPass/ForgotPass.jsx";
+import CourseContent from "./Components/Main/CoursesSection/ManageCourses/Right/CourseContent/CourseContent.jsx";
+import UserCoursesCards from "./Components/Main/CoursesSection/ManageCourses/Right/CourseContent/UserCoursesCards/UserCoursesCards.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -28,7 +30,9 @@ root.render(
         <Route path="/manage-courses" element={<ManageCourses />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/add-course" element={<AddCourse />} />
+        <Route path="/modify-course/:course_id" element={<CourseContent />} />
         <Route path="/my-courses" element={<MyCourses />} />
+        <Route path="/user-courses-cards" element={<UserCoursesCards />} />
         <Route path="/enrolled-students" element={<StudentsEnrolled />} />
         <Route path="/skeleton" element={<SkeletonForCards />} />
         <Route path="/signup" element={<Signup />} />

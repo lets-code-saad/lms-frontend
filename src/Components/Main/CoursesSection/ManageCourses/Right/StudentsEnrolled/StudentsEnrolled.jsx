@@ -27,9 +27,7 @@ const StudentsEnrolled = () => {
   const [enrolledStudents, setEnrolledStudents] = useState(null)
 
   useEffect(() => {
-    setTimeout(() => {
       dispatch(fetchCourses());
-    }, 1500);
   }, [dispatch]);
 
   return (

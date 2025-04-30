@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Table,
@@ -24,21 +24,19 @@ import { Link } from "react-router-dom";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { courses, loading } = useSelector((state) => state.GetUserCourses);
+  console.log(courses,"courses");
+  
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(fetchCourses());
-    }, 3000);
-  }, []);
+    dispatch(fetchCourses());
+  }, [dispatch]);
 
-  // total price
   const totalPrice = courses?.reduce((acc, curr) => {
     const price = Number(curr.coursePrice) || 0;
     const studentCount = curr.enrolledStudents?.length || 0;
     return acc + price * studentCount;
   }, 0);
 
-  console.log(courses, "courses");
 
   return (
     <div>
@@ -50,36 +48,31 @@ const Dashboard = () => {
         ) : (
           <>
             {courses.length === 0 ? (
-              <TableRow className="w-100">
-                <TableCell
-                  colSpan={4}
-                  className="d-flex text-center justify-content-center flex-column"
-                >
-                  <Box className="d-flex justify-content-center">
-                    <CardMedia
-                      component="img"
-                      sx={{ width: "360px", textAlign: "center" }}
-                      image="/imgs/Nothing found illustration.jpg"
-                    />
-                  </Box>
-                  <Box py={3}>
-                    <Typography variant="body1" fontWeight={500}>
-                      No courses found.
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Start by adding your first course!
-                    </Typography>
-                    <Link
-                      to="/add-course"
-                      className="text-black text-decoration-none"
-                    >
-                      <Button className="iffNoCourseAddCourse bg-blue text-capitalize text-white py-2 px-3 mt-3 fs-15 border-0 w-25">
-                        Add Course
-                      </Button>
-                    </Link>
-                  </Box>
-                </TableCell>
-              </TableRow>
+              <Box className="w-100 d-flex flex-column align-items-center">
+                <Box className="d-flex justify-content-center">
+                  <CardMedia
+                    component="img"
+                    sx={{ width: "360px", textAlign: "center" }}
+                    image="/imgs/Nothing found illustration.jpg"
+                  />
+                </Box>
+                <Box py={3} className="text-center">
+                  <Typography variant="body1" fontWeight={500}>
+                    No courses found.
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Start by adding your first course!
+                  </Typography>
+                  <Link
+                    to="/add-course"
+                    className="text-black text-decoration-none"
+                  >
+                    <Button className="iffNoCourseAddCourse bg-blue text-capitalize text-white py-2 px-3 mt-3 fs-15 border-0">
+                      Add Course
+                    </Button>
+                  </Link>
+                </Box>
+              </Box>
             ) : (
               <Box className="d-flex flex-column gap-5">
                 <Box
@@ -100,7 +93,7 @@ const Dashboard = () => {
                     <Avatar src="/imgs/patients_icon.svg" />
                     <Box className="d-flex flex-column">
                       <Typography className="fs-24" variant="h5">
-                        {"14"}
+                        {courses?.length}
                       </Typography>
                       <Typography className="text-span fs-15" variant="span">
                         {"Total Courses"}
@@ -121,7 +114,7 @@ const Dashboard = () => {
                     <Avatar src="/imgs/appointments_icon.svg" />
                     <Box className="d-flex flex-column">
                       <Typography className="fs-24" variant="h5">
-                        {"14"}
+                            {courses?.map((course)=>course.enrolledStudentCount) || 0}
                       </Typography>
                       <Typography className="text-span fs-15" variant="span">
                         {"Total Enrollments"}
@@ -142,7 +135,7 @@ const Dashboard = () => {
                     <Avatar src="/imgs/earning_icon.svg" />
                     <Box className="d-flex flex-column">
                       <Typography className="fs-24" variant="h5">
-                            {totalPrice}  // total price
+                        {`$ ${totalPrice}`}
                       </Typography>
                       <Typography className="text-span fs-15" variant="span">
                         {"Total Earnings"}
@@ -150,6 +143,7 @@ const Dashboard = () => {
                     </Box>
                   </Box>
                 </Box>
+
                 <Box
                   className="DashboardTable"
                   sx={{ flex: 1, ml: 1, boxShadow: "none" }}
@@ -192,25 +186,24 @@ const Dashboard = () => {
                       <TableBody>
                         {courses
                           .filter(
-                            (uniquie) => uniquie.enrolledStudents.length > 0
+                            (course) => course.enrolledStudents.length > 0
                           )
-                          .map((student, index) => (
-                            <TableRow key={student.id}>
+                          .map((course, index) => (
+                            <TableRow key={course.id}>
                               <TableCell>{index + 1}</TableCell>
                               <TableCell>
                                 <Box display="flex" alignItems="center">
                                   <Typography>
-                                    {" "}
-                                    {student?.enrolledStudents
+                                    {course?.enrolledStudents
                                       ?.map((user) => user?.username)
                                       .join(", ")}
                                   </Typography>
                                 </Box>
                               </TableCell>
-                              <TableCell>{student.courseTitle}</TableCell>
+                              <TableCell>{course.courseTitle}</TableCell>
                               <TableCell>
                                 {new Date(
-                                  student.createdAt
+                                  course.createdAt
                                 ).toLocaleDateString()}
                               </TableCell>
                             </TableRow>

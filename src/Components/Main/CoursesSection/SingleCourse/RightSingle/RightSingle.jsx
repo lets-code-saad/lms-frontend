@@ -64,19 +64,19 @@ const RightSingle = ({ courseId }) => {
             </Box>
             <Box className="d-flex align-items-center gap-3">
               <Typography className="fs-30 fw-bold" variant="h6">
-                {getSingleCourse.coursePrice}
+                {`$${getSingleCourse?.coursePrice}`}
               </Typography>
               <Typography
                 className="fs-18 text-span text-decoration-line-through"
                 variant="p"
               >
-                $19.99
+                {`$${Number(getSingleCourse?.coursePrice) + 13.99}`}
               </Typography>
               <Typography
                 className="fs-18 text-span text-decoration-line-through"
                 variant="p"
               >
-                50% Off
+                20% Off
               </Typography>
             </Box>
             {/* Rating Component */}

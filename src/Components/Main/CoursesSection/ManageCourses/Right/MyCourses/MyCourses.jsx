@@ -60,7 +60,7 @@ const [selectedCourseId, setSelectedCourseId] =useState(null)
                 <TableHead>
                   {courses?.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center">
+                      <TableCell colSpan={5} align="center">
                         <Box className="d-flex justify-content-center">
                           <CardMedia
                             component="img"
@@ -88,52 +88,76 @@ const [selectedCourseId, setSelectedCourseId] =useState(null)
                     </TableRow>
                   ) : (
                     <TableRow>
-                      <TableCell className="numberingColHead" sx={{ fontWeight: "600", fontSize: "14px" }}>
+                      <TableCell
+                        align="center"
+                        sx={{ fontWeight: "600", fontSize: "14px" }}
+                      >
                         #
                       </TableCell>
-                      <TableCell sx={{ fontWeight: "600", fontSize: "14px" }}>
-                        AllCourses
+                      <TableCell
+                        align="center"
+                        sx={{ fontWeight: "600", fontSize: "14px" }}
+                      >
+                        All Courses
                       </TableCell>
-                      <TableCell sx={{ fontWeight: "600", fontSize: "14px" }}>
+                      <TableCell
+                        align="center"
+                        sx={{ fontWeight: "600", fontSize: "14px" }}
+                      >
                         Earnings
                       </TableCell>
-                      <TableCell sx={{ fontWeight: "600", fontSize: "14px" }}>
+                      <TableCell
+                        align="center"
+                        sx={{ fontWeight: "600", fontSize: "14px" }}
+                      >
                         Students
                       </TableCell>
-                      <TableCell sx={{ fontWeight: "600", fontSize: "14px" }}>
+                      <TableCell
+                        align="center"
+                        sx={{ fontWeight: "600", fontSize: "14px" }}
+                      >
                         Action
                       </TableCell>
                     </TableRow>
                   )}
                 </TableHead>
+
                 <TableBody>
                   {courses?.map((student, index) => (
                     <TableRow key={student._id}>
-                      <TableCell className="numberingColData">{index + 1}</TableCell>
+                      <TableCell align="center">{index + 1}</TableCell>
                       <TableCell align="center">
-                        <Box display="flex" alignItems="center">
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                        >
                           <Avatar
                             src={`data:image/${student.thumbnail};base64,${student.thumbnail}`}
                             sx={{ mr: 1 }}
                           />
-                          <Typography className="courseTitle">{student.courseTitle}</Typography>
+                          <Typography className="courseTitle">
+                            {student.courseTitle}
+                          </Typography>
                         </Box>
                       </TableCell>
-                      <TableCell align="center">{student.coursePrice}</TableCell>
-                      <TableCell className="text-center">
+                      <TableCell align="center">
+                        {student.coursePrice}
+                      </TableCell>
+                      <TableCell align="center">
                         {student.enrolledStudentCount}
                       </TableCell>
-                      <TableCell>
+                      <TableCell align="center">
                         <Button
                           onClick={() => {
-                            setOpen(true)
-                            setSelectedCourseId(student._id)
+                            setOpen(true);
+                            setSelectedCourseId(student._id);
                           }}
                           sx={{
-                            boxShadow:"none",
+                            boxShadow: "none",
                             "&:hover": {
-                              backgroundColor: "inherit", // Keeps the normal color on hover
-                              boxShadow: "none", // Removes shadow effect
+                              backgroundColor: "inherit",
+                              boxShadow: "none",
                             },
                           }}
                         >
@@ -143,12 +167,13 @@ const [selectedCourseId, setSelectedCourseId] =useState(null)
                     </TableRow>
                   ))}
                 </TableBody>
-                  {/* calling the delete modal */}
-                  <ModalDeleteCourse
-                    open={open}
-                    courseId={selectedCourseId}
-                    onClose={()=>setOpen(false)}
-                  />
+
+                {/* calling the delete modal */}
+                <ModalDeleteCourse
+                  open={open}
+                  courseId={selectedCourseId}
+                  onClose={() => setOpen(false)}
+                />
               </Table>
             </TableContainer>
           )}

@@ -17,7 +17,6 @@ import Footer from "../../../Footer/Footer";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import SkeletonForAllCards from "../../../SkeletonLoading/SkeletonForAllCards";
-import SkeletonForLoading from "../../../SkeletonLoading/SkeletonForAllCards";
 import getAllCourses from "../../../Store/Thunks/getAllCourses";
 
 const AllCourses = () => {
@@ -33,9 +32,7 @@ const AllCourses = () => {
 
   // fetch data on mount
   useEffect(() => {
-    setTimeout(() => {
       dispatch(getAllCourses());
-    }, 1000);
   }, [dispatch]);
 
   // When courses are updated from Redux, reflect that in filteredItems
@@ -181,7 +178,7 @@ const AllCourses = () => {
         <Box sx={{ marginTop: "40px" }} className="courseCards">
           <Grid container spacing={2}>
             {loading ? (
-              <SkeletonForLoading />
+              <SkeletonForAllCards />
             ) : (
               filteredItems?.slice(0, visibleCourses).map((items) => {
                 return (

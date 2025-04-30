@@ -159,7 +159,7 @@ const AddCourse = () => {
             </Box>
             <Box className="thumbnailOrPriceDiv d-flex align-items-center justify-content-between">
               <Box className="d-flex flex-column">
-                <label className="text-border">Course Price</label>
+                <label className="text-border">{`Course Price ($)`}</label>
                 <Controller
                   name="coursePrice"
                   rules={{

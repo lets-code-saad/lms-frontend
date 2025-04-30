@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import "./TopCourses.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import SkeletonForLoading from "../../../SkeletonLoading/SkeletonForAllCards";
 import SkeletonForCards from "../../../SkeletonLoading/SkeletonForCards";
 import getAllCourses from "../../../Store/Thunks/getAllCourses";
 

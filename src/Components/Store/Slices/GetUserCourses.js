@@ -20,15 +20,13 @@ const GetUserCourses = createSlice({
             builder.addCase(fetchCourses.fulfilled, (state, action) => {
               state.loading = false;
               state.courses = action?.payload
-              console.log(action);
-              
               state.error = null;
                 
             })
         
             builder.addCase(fetchCourses.rejected, (state, action) => {
                 state.loading =false
-                state.error = action.payload
+                state.error = action.payload?.message
             })
     }
 });

@@ -2,13 +2,15 @@ import { Box, CardMedia, Divider, Typography } from "@mui/material";
 import React from "react";
 import SchoolIcon from "@mui/icons-material/School"
 import { NavLink, Outlet } from "react-router-dom"
+import VideoSettingsIcon from "@mui/icons-material/VideoSettings";
+
 import "./ManageLeft.css";
 const ManageLeft = ({ showSidebar }) => {
   return (
     <>
       <Box sx={{ height: "80vh" }} className="manageCourseDiv d-flex mt-1">
         <Box
-          sx={{ width: "250px",height:"47px" }}
+          sx={{ width: "250px", height: "47px" }}
           className="manageCourseNav d-flex flex-column gap-2"
         >
           <NavLink
@@ -47,6 +49,20 @@ const ManageLeft = ({ showSidebar }) => {
               <Typography className="fs-16">Add Course</Typography>
             </Box>
           </NavLink>
+          {/* Modify Course */}
+          <NavLink
+            to="/user-courses-cards"
+            className={({ isActive }) =>
+              isActive
+                ? "active text-decoration-none text-black"
+                : "text-decoration-none text-black"
+            }
+          >
+            <Box className="manageCourseNavLink d-flex align-items-center gap-1 py-2 ps-2 pe-5">
+              <VideoSettingsIcon className="" sx={{ width: "22px" }} />
+              <Typography className="fs-16">Set Course Content</Typography>
+            </Box>
+          </NavLink>
           <NavLink
             to="/my-courses"
             className={({ isActive }) =>
@@ -75,7 +91,7 @@ const ManageLeft = ({ showSidebar }) => {
                 component="img"
                 image="/imgs/person_tick_icon.png"
               />
-              <Typography className="fs-16">Student Enrolled </Typography>
+              <Typography className="fs-16">Students Enrolled </Typography>
             </Box>
           </NavLink>
         </Box>

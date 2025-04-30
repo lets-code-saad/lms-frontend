@@ -263,7 +263,7 @@ const Signin = () => {
                 mb={3}
               >
                 <FormControlLabel control={<Checkbox />} label="Remember me" />
-                <Link to="/forgot-password">
+                <Link className="text-black text-decoration-none" to="/forgot-password">
                   <Typography variant="body2" sx={{ cursor: "pointer" }}>
                     Forgot Password ?
                   </Typography>

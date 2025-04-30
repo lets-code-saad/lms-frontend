@@ -6,7 +6,6 @@ import Main from "./Components/Main/Main";
 import { Toaster } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
-import SkeletonForLoading from "./Components/SkeletonLoading/SkeletonForAllCards";
 import { Box, LinearProgress } from "@mui/material";
 function App() {
   const [loading, setLoading] = useState(false);

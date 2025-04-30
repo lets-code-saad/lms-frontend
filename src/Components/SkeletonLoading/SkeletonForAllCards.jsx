@@ -2,8 +2,8 @@ import React from "react";
 import { Card, CardHeader, CardContent, Skeleton, Avatar, Box, Grid } from "@mui/material";
 
 
-const SkeletonForLoading = () => {
-  const skeletonCards = Array.from({length:8})
+const SkeletonForAllCards = () => {
+  const skeletonCards = Array.from({ length: 8 });
   return (
     <Box className="container">
       <Grid container spacing={3}>
@@ -51,4 +51,4 @@ const SkeletonForLoading = () => {
   );
 };
 
-export default SkeletonForLoading;
+export default SkeletonForAllCards;
