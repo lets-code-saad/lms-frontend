@@ -4,10 +4,8 @@ import AlarmIcon from "@mui/icons-material/Alarm";
 import CourseStructure from './CourseStructure/CourseStructure';
 import { useDispatch, useSelector } from 'react-redux';
 import singleCourse from '../../../../Store/Thunks/singleCourseThunk';
-const LeftSingle = ({courseId}) => {
+const LeftSingle = ({ courseId, getSingleCourse }) => {
   const dispatch = useDispatch();
-
-    const { getSingleCourse } = useSelector((state) => state.GetSingleCourse);
 
   return (
     <>
@@ -15,12 +13,12 @@ const LeftSingle = ({courseId}) => {
         <Box className="left-head d-flex flex-column gap-2">
           <Box>
             <Typography className="fs-40 mt-3 fw-semibold" variant="p">
-              {getSingleCourse.courseTitle}
+              {getSingleCourse?.courseTitle}
             </Typography>
           </Box>
           <Box>
             <Typography className="fs-15 mt-3" variant="p">
-              {getSingleCourse.courseDescription}
+              {getSingleCourse?.courseDescription}
             </Typography>
           </Box>
           {/* Rating Component */}
@@ -48,12 +46,12 @@ const LeftSingle = ({courseId}) => {
           </Box>
           {/* Course Structure Component */}
           <Box className="mt-4">
-            <CourseStructure />
+            <CourseStructure getSingleCourse={getSingleCourse} />
           </Box>
         </Box>
       </Box>
     </>
   );
-}
+};
 
 export default LeftSingle

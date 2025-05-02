@@ -11,6 +11,7 @@ import UnEnrollCourseSlice from "./Slices/UnEnrollCourseSlice";
 import ForgotPasswordSlice from "./Slices/ForgotPasswordSlice";
 import ResetPasswordSlice from "./Slices/ResetPasswordSlice";
 import DeleteCourseSlice from "./Slices/DeleteCourseSlice";
+import AddLessonSlice from "./Slices/AddLessonSlice";
 
 const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
     ResetPasswordSlice: ResetPasswordSlice,
     ForgotPasswordSlice: ForgotPasswordSlice,
     DeleteCourseSlice: DeleteCourseSlice,
+    AddLessonSlice: AddLessonSlice,
   },
 });
 

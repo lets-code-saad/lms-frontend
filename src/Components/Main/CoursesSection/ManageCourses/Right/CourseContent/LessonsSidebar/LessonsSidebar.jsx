@@ -53,8 +53,8 @@ const newDummyLesson = {
   lessonDescription: "",
   lessonVideoURL: null,
               };
-              if (lastLesson && (lastLesson.lessonTitle.trim() === "" ||
-                lastLesson.lessonDescription.trim() === "" ||
+              if (lastLesson && (lastLesson?.lessonTitle?.trim() === "" ||
+                lastLesson.lessonDescription?.trim() === "" ||
           lastLesson.lessonVideoURL === null)) {
             toast.error("Please complete this lesson first!")
                

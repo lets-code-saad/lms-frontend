@@ -70,7 +70,7 @@ const UserCoursesCards = () => {
     <>
       {/* navbar */}
       <Navbar />
-      <Box className="d-flex gap-2 container">
+      <Box className="coursesCardsWithLeftSidebar d-flex gap-2 container">
         <Box className="addCourseDiv">
           <ManageLeft />
         </Box>

@@ -6,8 +6,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 
-const CourseStructure = () => {
-    
+const CourseStructure = ({ getSingleCourse }) => {
   return (
     <>
       <Box>
@@ -16,10 +15,8 @@ const CourseStructure = () => {
             Course Structure
           </Typography>
           <Box className="d-flex align-items-center gap-1">
-            <Typography className="fs-13">22 sections </Typography>
-            <Typography className="fs-13">/</Typography>
             <Typography className="fs-13" variant="span">
-              54 lectures
+              {`${getSingleCourse?.lessons?.length} Lessons`}
             </Typography>
             <Typography className="fs-13">/</Typography>
             <Typography className="fs-13" variant="span">
@@ -29,6 +26,7 @@ const CourseStructure = () => {
         </Box>
 
         <Box sx={{ marginTop: "20px" }}>
+          {/* Displaying one course to be default expanded on each course*/}
           <Accordion defaultExpanded>
             <AccordionSummary
               sx={{ backgroundColor: "#E3E3E3" }}
@@ -37,7 +35,7 @@ const CourseStructure = () => {
             >
               <ExpandMoreIcon className="text-span" />
               <Typography variant="span" className="fw-semibold">
-                Project Introduction
+                {getSingleCourse?.lessons?.lessonTitle}
               </Typography>
               <Typography component="span" className="ms-auto text-muted small">
                 3 lectures – 45 mins
@@ -77,102 +75,65 @@ const CourseStructure = () => {
               </Box>
             </AccordionDetails>
           </Accordion>
-          {/* 2 */}
-          <Accordion defaultExpanded>
-            <AccordionSummary
-              sx={{ backgroundColor: "#E3E3E3" }}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              <ExpandMoreIcon className="text-span" />
-              <Typography variant="span" className="fw-semibold">
-                Project Setup and configuration
-              </Typography>
-              <Typography component="span" className="ms-auto text-muted small">
-                3 lectures – 45 mins
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box className="d-flex flex-column gap-3">
-                <Box className="d-flex justify-content-between align-items-center">
-                  <Box className="d-flex align-items-center gap-2">
-                    <PlayCircleIcon fontSize="small" color="action" />
-                    <Typography>
-                      App Overview – Build Text-to-Image SaaS
+          {getSingleCourse?.lessons?.map((lesson) => (
+            <Accordion>
+              <AccordionSummary
+                sx={{ backgroundColor: "#E3E3E3" }}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <ExpandMoreIcon className="text-span" />
+                <Typography variant="span" className="fw-semibold">
+                  {getSingleCourse?.lessons?.lessonTitle}
+                </Typography>
+                <Typography
+                  component="span"
+                  className="ms-auto text-muted small"
+                >
+                  3 lectures – 45 mins
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box className="d-flex flex-column gap-3">
+                  <Box className="d-flex justify-content-between align-items-center">
+                    <Box className="d-flex align-items-center gap-2">
+                      <PlayCircleIcon fontSize="small" color="action" />
+                      <Typography>
+                        App Overview – Build Text-to-Image SaaS
+                      </Typography>
+                    </Box>
+                    <Typography className="text-muted small">
+                      10 mins
                     </Typography>
                   </Box>
-                  <Typography className="text-muted small">10 mins</Typography>
-                </Box>
-                <Box className="d-flex justify-content-between align-items-center">
-                  <Box className="d-flex align-items-center gap-2">
-                    <PlayCircleIcon fontSize="small" color="action" />
-                    <Typography>
-                      Tech Stack – React, Node.js, MongoDB.
+                  {/* 2 */}
+                  <Box className="d-flex justify-content-between align-items-center">
+                    <Box className="d-flex align-items-center gap-2">
+                      <PlayCircleIcon fontSize="small" color="action" />
+                      <Typography>
+                        Tech Stack – React, Node.js, MongoDB.
+                      </Typography>
+                    </Box>
+                    <Typography className="text-muted small">
+                      15 mins
                     </Typography>
                   </Box>
-                  <Typography className="text-muted small">15 mins</Typography>
-                </Box>
-                <Box className="d-flex justify-content-between align-items-center">
-                  <Box className="d-flex align-items-center gap-2">
-                    <PlayCircleIcon fontSize="small" color="action" />
-                    <Typography>
-                      Tech Stack – React, Node.js, MongoDB.
+                  {/* 3 */}
+                  <Box className="d-flex justify-content-between align-items-center">
+                    <Box className="d-flex align-items-center gap-2">
+                      <PlayCircleIcon fontSize="small" color="action" />
+                      <Typography>
+                        Tech Stack – React, Node.js, MongoDB.
+                      </Typography>
+                    </Box>
+                    <Typography className="text-muted small">
+                      15 mins
                     </Typography>
                   </Box>
-                  <Typography className="text-muted small">15 mins</Typography>
                 </Box>
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-          {/* 3 */}
-          <Accordion>
-            <AccordionSummary
-              sx={{ backgroundColor: "#E3E3E3" }}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              <ExpandMoreIcon className="text-span" />
-              <Typography variant="span" className="fw-semibold">
-                Tailwind Setup
-              </Typography>
-              <Typography component="span" className="ms-auto text-muted small">
-                3 lectures – 45 mins
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box className="d-flex flex-column gap-3">
-                <Box className="d-flex justify-content-between align-items-center">
-                  <Box className="d-flex align-items-center gap-2">
-                    <PlayCircleIcon fontSize="small" color="action" />
-                    <Typography>
-                      App Overview – Build Text-to-Image SaaS
-                    </Typography>
-                  </Box>
-                  <Typography className="text-muted small">10 mins</Typography>
-                </Box>
-                {/* 2 */}
-                <Box className="d-flex justify-content-between align-items-center">
-                  <Box className="d-flex align-items-center gap-2">
-                    <PlayCircleIcon fontSize="small" color="action" />
-                    <Typography>
-                      Tech Stack – React, Node.js, MongoDB.
-                    </Typography>
-                  </Box>
-                  <Typography className="text-muted small">15 mins</Typography>
-                </Box>
-                {/* 3 */}
-                <Box className="d-flex justify-content-between align-items-center">
-                  <Box className="d-flex align-items-center gap-2">
-                    <PlayCircleIcon fontSize="small" color="action" />
-                    <Typography>
-                      Tech Stack – React, Node.js, MongoDB.
-                    </Typography>
-                  </Box>
-                  <Typography className="text-muted small">15 mins</Typography>
-                </Box>
-              </Box>
-            </AccordionDetails>
-          </Accordion>
+              </AccordionDetails>
+            </Accordion>
+          ))}
         </Box>
 
         {/* Course description */}
@@ -191,12 +152,11 @@ const CourseStructure = () => {
               developer, JavaScript is a must to learn. It also helps you to get
               high-paying jobs all over the world.
             </Typography>
-            
           </Box>
         </Box>
       </Box>
     </>
   );
-}
+};
 
 export default CourseStructure

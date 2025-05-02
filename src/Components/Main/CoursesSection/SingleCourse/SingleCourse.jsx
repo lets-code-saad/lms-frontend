@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axiosInterceptor from "../../../../Middlewares/axiosInterceptor";
 import singleCourse from "../../../Store/Thunks/singleCourseThunk";
 import SkeletonForSingle from "../../../SkeletonLoading/SkeletonForSingle";
-import enrollCourse from "../../../Store/Thunks/enrollCourse";
+import getAllCourses from "../../../Store/Thunks/getAllCourses";
 
 const SingleCourse = () => {
 
@@ -24,8 +24,12 @@ const SingleCourse = () => {
     dispatch(singleCourse(product_id))
 },[dispatch,product_id])
 
-  const { loading} = useSelector((state)=>state.GetSingleCourse)
+  const { getSingleCourse,loading } = useSelector(
+    (state) => state.GetSingleCourse
+  );
+  console.log(getSingleCourse, "single");
   
+
   return (
     <>
       <Box>
@@ -37,16 +41,23 @@ const SingleCourse = () => {
         </Box>
         {/* signle page */}
         {/* displaying single course page left side */}
-{loading ? <SkeletonForSingle/> :        <Box className="singlePage_lg container pt-5">
-          <Grid container spacing={4} justifyContent={"space-between"}>
-            <Grid item size={{ xs: 12, sm: 12, lg: 8, xl: 6 }}>
-              <LeftSingle courseId={product_id} />
+        {loading ? (
+          <SkeletonForSingle />
+        ) : (
+          <Box className="singlePage_lg container pt-5">
+            <Grid container spacing={4} justifyContent={"space-between"}>
+              <Grid item size={{ xs: 12, sm: 12, lg: 8, xl: 6 }}>
+                <LeftSingle
+                  getSingleCourse={getSingleCourse}
+                  courseId={product_id}
+                />
+              </Grid>
+              <Grid item size={{ xs: 12, sm: 12, lg: 4, xl: 6 }}>
+                <RightSingle courseId={product_id} />
+              </Grid>
             </Grid>
-            <Grid item size={{ xs: 12, sm: 12, lg: 4, xl: 6 }}>
-              <RightSingle courseId={product_id} />
-            </Grid>
-          </Grid>
-        </Box>}
+          </Box>
+        )}
 
         {/* Mobile Screen Single Page */}
         <Box className="singlePage_sm container pt-5">

@@ -7,8 +7,6 @@ try {
         const result = await axiosInterceptor.post(
           `/user/enrollCourse/${course_id}`
     );
-    console.log(result,"result");
-    
         return result?.data;
 } catch (error) {
 toast.error("Error Enrolling In Course!")

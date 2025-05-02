@@ -293,6 +293,23 @@ const Navbar = ({ onDashboardClick }) => {
                 <MenuItem onClick={handleDashboardClose}>Add Course</MenuItem>
               </NavLink>
               <NavLink
+                to="/user-courses-cards"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active text-decoration-none text-black"
+                    : "text-decoration-none text-black"
+                }
+              >
+                <Box className="manageCourseNavLink">
+                  <MenuItem
+                    onClick={handleDashboardClose}
+                    className="fs-16"
+                  >
+                    Set Course Content
+                  </MenuItem>
+                </Box>
+              </NavLink>
+              <NavLink
                 to="/enrolled-students"
                 className={({ isActive }) =>
                   isActive
