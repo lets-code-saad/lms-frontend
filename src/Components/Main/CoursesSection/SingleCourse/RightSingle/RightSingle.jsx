@@ -19,7 +19,7 @@ import singleCourse from "../../../../Store/Thunks/singleCourseThunk";
 import enrollCourse from "../../../../Store/Thunks/enrollCourse";
 import authToProfile from "../../../../Store/Thunks/getProfileThunk";
 
-const RightSingle = ({ courseId }) => {
+const RightSingle = ({ courseId,isEnrolled }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.GetProfileSlice);
   // checking if the user is enrolled or not using state
@@ -41,8 +41,6 @@ const RightSingle = ({ courseId }) => {
     (state) => state.UnEnrollCourseSlice
   );
 
-  // checking if the user is Enrolled or not
-  const isEnrolled = user?.userInDB?.enrolledCourses?.includes(courseId)
 
   return (
     <>

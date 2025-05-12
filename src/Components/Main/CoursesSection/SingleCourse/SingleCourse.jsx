@@ -28,8 +28,11 @@ const SingleCourse = () => {
     (state) => state.GetSingleCourse
   );
   console.log(getSingleCourse, "single");
-  
 
+    const { user } = useSelector((state) => state.GetProfileSlice);
+  // checking if the user is Enrolled or not
+  const isEnrolled = user?.userInDB?.enrolledCourses?.includes(product_id)
+  
   return (
     <>
       <Box>
@@ -49,11 +52,12 @@ const SingleCourse = () => {
               <Grid item size={{ xs: 12, sm: 12, lg: 8, xl: 6 }}>
                 <LeftSingle
                   getSingleCourse={getSingleCourse}
+                  isEnrolled={isEnrolled}
                   courseId={product_id}
                 />
               </Grid>
               <Grid item size={{ xs: 12, sm: 12, lg: 4, xl: 6 }}>
-                <RightSingle courseId={product_id} />
+                <RightSingle isEnrolled={isEnrolled} courseId={product_id} />
               </Grid>
             </Grid>
           </Box>

@@ -8,6 +8,7 @@ import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import addCourse from "../../../../../Store/Thunks/addCourseThunk";
+import fetchCourses from "../../../../../Store/Thunks/coursesThunk";
 
 const AddCourse = () => {
   const {
@@ -47,6 +48,9 @@ const AddCourse = () => {
         reset(); //reset the form
         setSelectedThumb(null); // reset the thumbnail
       }, 1000);
+      // updating the courses when a course is being added
+      dispatch(fetchCourses())
+      
     } catch (error) {
       toast.dismiss()
       toast.error("Course Add Failed");

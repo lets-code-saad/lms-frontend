@@ -1,12 +1,14 @@
-import { Box, Typography } from '@mui/material';
-import React from 'react'
+import { Box, Typography } from "@mui/material";
+import React, { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import LockIcon from '@mui/icons-material/Lock';
 
-const CourseStructure = ({ getSingleCourse }) => {
+const CourseStructure = ({ getSingleCourse, isEnrolled }) => {
+  const [activeVideo, setActiveVideo] = useState(null);
   return (
     <>
       <Box>
@@ -35,105 +37,93 @@ const CourseStructure = ({ getSingleCourse }) => {
             >
               <ExpandMoreIcon className="text-span" />
               <Typography variant="span" className="fw-semibold">
-                {getSingleCourse?.lessons?.lessonTitle}
-              </Typography>
-              <Typography component="span" className="ms-auto text-muted small">
-                3 lectures – 45 mins
+                {getSingleCourse?.lessons?.[0]?.lessonTitle ||
+                  "No lessons available"}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Box className="d-flex flex-column gap-3">
                 <Box className="d-flex justify-content-between align-items-center">
-                  <Box className="d-flex align-items-center gap-2">
-                    <PlayCircleIcon fontSize="small" color="action" />
+                  <Box
+                    onClick={() => {
+                      if (isEnrolled) {
+                        setActiveVideo(getSingleCourse?.lessons?.[0]);
+                      }
+                    }}
+                    className="d-flex align-items-center gap-2"
+                  >
+                    {isEnrolled ? (
+                      <PlayCircleIcon fontSize="small" color="action" />
+                    ) : (
+                      <LockIcon fontSize="small" color="action" />
+                    )}
                     <Typography>
-                      App Overview – Build Text-to-Image SaaS
+                      {getSingleCourse?.lessons?.[0]?.lessonVideoURL}
                     </Typography>
                   </Box>
-                  <Typography className="text-muted small">10 mins</Typography>
                 </Box>
-                {/* 2 */}
-                <Box className="d-flex justify-content-between align-items-center">
-                  <Box className="d-flex align-items-center gap-2">
-                    <PlayCircleIcon fontSize="small" color="action" />
-                    <Typography>
-                      Tech Stack – React, Node.js, MongoDB.
-                    </Typography>
-                  </Box>
-                  <Typography className="text-muted small">15 mins</Typography>
-                </Box>
-                {/* 3 */}
-                <Box className="d-flex justify-content-between align-items-center">
-                  <Box className="d-flex align-items-center gap-2">
-                    <PlayCircleIcon fontSize="small" color="action" />
-                    <Typography>
-                      Tech Stack – React, Node.js, MongoDB.
-                    </Typography>
-                  </Box>
-                  <Typography className="text-muted small">15 mins</Typography>
-                </Box>
+                  {/* conditionally rendering the video */}
+                  {activeVideo === getSingleCourse?.lessons?.[0] && (
+                    <Box mt={2}>
+                      <video width="600" height="340" controls>
+                        <source
+                          src={`http://localhost:5000/${getSingleCourse?.lessons?.[0]?.lessonVideoURL}`}
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    </Box>
+                  )}
               </Box>
             </AccordionDetails>
           </Accordion>
-          {getSingleCourse?.lessons?.map((lesson) => (
-            <Accordion>
-              <AccordionSummary
-                sx={{ backgroundColor: "#E3E3E3" }}
-                aria-controls="panel1-content"
-                id="panel1-header"
-              >
-                <ExpandMoreIcon className="text-span" />
-                <Typography variant="span" className="fw-semibold">
-                  {getSingleCourse?.lessons?.lessonTitle}
-                </Typography>
-                <Typography
-                  component="span"
-                  className="ms-auto text-muted small"
+          {getSingleCourse?.lessons?.slice(1).map(
+            (
+              lesson // slice excludes the 0
+            ) => (
+              <Accordion>
+                <AccordionSummary
+                  sx={{ backgroundColor: "#E3E3E3" }}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
                 >
-                  3 lectures – 45 mins
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Box className="d-flex flex-column gap-3">
-                  <Box className="d-flex justify-content-between align-items-center">
-                    <Box className="d-flex align-items-center gap-2">
+                  <ExpandMoreIcon className="text-span" />
+                  <Typography variant="span" className="fw-semibold">
+                    {lesson?.lessonTitle}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box
+                    onClick={() => {
+                      if (isEnrolled) {
+                        setActiveVideo(lesson?._id);
+                      }
+                    }}
+                    className="d-flex align-items-center gap-2"
+                  >
+                    {isEnrolled ? (
                       <PlayCircleIcon fontSize="small" color="action" />
-                      <Typography>
-                        App Overview – Build Text-to-Image SaaS
-                      </Typography>
-                    </Box>
-                    <Typography className="text-muted small">
-                      10 mins
-                    </Typography>
+                    ) : (
+                      <LockIcon fontSize="small" color="action" />
+                    )}
+                    <Typography>{lesson?.lessonVideoURL}</Typography>
                   </Box>
-                  {/* 2 */}
-                  <Box className="d-flex justify-content-between align-items-center">
-                    <Box className="d-flex align-items-center gap-2">
-                      <PlayCircleIcon fontSize="small" color="action" />
-                      <Typography>
-                        Tech Stack – React, Node.js, MongoDB.
-                      </Typography>
+                  {/* conditionally rendering the video */}
+                  {activeVideo === lesson._id && (
+                    <Box mt={2}>
+                      <video width="600" height="340" controls>
+                        <source
+                          src={`http://localhost:5000/${lesson.lessonVideoURL}`}
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
                     </Box>
-                    <Typography className="text-muted small">
-                      15 mins
-                    </Typography>
-                  </Box>
-                  {/* 3 */}
-                  <Box className="d-flex justify-content-between align-items-center">
-                    <Box className="d-flex align-items-center gap-2">
-                      <PlayCircleIcon fontSize="small" color="action" />
-                      <Typography>
-                        Tech Stack – React, Node.js, MongoDB.
-                      </Typography>
-                    </Box>
-                    <Typography className="text-muted small">
-                      15 mins
-                    </Typography>
-                  </Box>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+                  )}
+                </AccordionDetails>
+              </Accordion>
+            )
+          )}
         </Box>
 
         {/* Course description */}
@@ -159,4 +149,4 @@ const CourseStructure = ({ getSingleCourse }) => {
   );
 };
 
-export default CourseStructure
+export default CourseStructure;

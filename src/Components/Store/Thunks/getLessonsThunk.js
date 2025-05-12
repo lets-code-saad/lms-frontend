@@ -1,15 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInterceptor from "../../../Middlewares/axiosInterceptor";
 
-const addLessonThunk = createAsyncThunk(
-  "instructor/addLesson",
-  async ({ courseId, formData }, {rejectWithValue}) => {
+const getLessonsThunk = createAsyncThunk(
+  "instructor/getLessons",
+  async ({courseId}, { rejectWithValue }) => {
     try {
-      const res = await axiosInterceptor.post(
-        `instructor/addLesson/${courseId}`,
-        formData
+      const res = await axiosInterceptor.get(
+        `instructor/getLessons/${courseId}`
       );
+      console.log(res, "response");
       return res?.data;
+      
     } catch (error) {
       return rejectWithValue(
         error?.response?.data || { message: error?.message }
@@ -18,4 +19,4 @@ const addLessonThunk = createAsyncThunk(
   }
 );
 
-export default addLessonThunk;
+export default getLessonsThunk;

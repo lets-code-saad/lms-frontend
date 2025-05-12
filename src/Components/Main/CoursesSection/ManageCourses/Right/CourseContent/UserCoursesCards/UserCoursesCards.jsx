@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./UserCoursesCards.css"
+import "./UserCoursesCards.css";
 import {
   Box,
   Button,
@@ -19,19 +19,23 @@ import Footer from "../../../../../../Footer/Footer";
 import SkeletonForAllCards from "../../../../../../SkeletonLoading/SkeletonForAllCards";
 import ManageLeft from "../../../Left/ManageLeft";
 import fetchCourses from "../../../../../../Store/Thunks/coursesThunk";
+import EditIcon from "@mui/icons-material/Edit";
+import ManageCourseModal from "./ManageCourseModal/ManageCourseModal";
+import SettingsEthernetIcon from "@mui/icons-material/SettingsEthernet";
+import LayersIcon from "@mui/icons-material/Layers";
 
 const UserCoursesCards = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
-    // fetching courses api from redux
-  const { courses,loading } = useSelector((state) => state.GetUserCourses);
+  // fetching courses api from redux
+  const { courses, loading } = useSelector((state) => state.GetUserCourses);
   // button loding
   const [buttonLoading, setButtonLoading] = useState(false);
   const [filteredItems, setFilteredItems] = useState([]);
 
   // fetch data on mount
   useEffect(() => {
-      dispatch(fetchCourses());
+    dispatch(fetchCourses());
   }, [dispatch]);
 
   // When courses are updated from Redux, reflect that in filteredItems
@@ -66,6 +70,10 @@ const UserCoursesCards = () => {
     }, 1500);
   };
 
+  // managing the manage course modal
+  const [open, setOpen] = useState(false);
+  // fetching course id in the state
+  const [courseId, setCourseId] = useState(null)
   return (
     <>
       {/* navbar */}
@@ -210,42 +218,50 @@ const UserCoursesCards = () => {
                 {loading ? (
                   <SkeletonForAllCards />
                 ) : (
-                  filteredItems?.slice(0, visibleCourses).map((items) => {
-                    return (
-                      <Grid
-                        key={items._id}
-                        sx={{ borderRadius: "8px" }}
-                        className="border bg-white"
-                        item
-                        size={{ xs: 12, sm: 6, lg: 3, xl: 2 }}
-                      >
-                        <Link
-                          className="text-decoration-none text-black"
-                          to={`/modify-course/${items._id}`}
-                        >
-                          {loading && filteredItems.length === 0 ? (
-                            <SkeletonForAllCards />
-                          ) : (
+                      filteredItems?.slice(0, visibleCourses).map((items) => {
+                        // generating random value < 5 for rating component
+                        const randomRatingValue = (
+                          Math.random() * 4 +
+                          1
+                        ).toFixed(2); // it will fix it to just 2 digits
+                        const randomRatedUsers = Math.ceil(
+                          Math.random() * 1000 + 1
+                        );
+                        return (
+                          <Grid
+                            key={items._id}
+                            sx={{
+                              borderRadius: "8px",
+                              width: "100%",
+                            }}
+                            className="border bg-white"
+                            item
+                            size={{ xs: 12, sm: 6, lg: 3, xl: 2 }}
+                          >
                             <Box>
                               <CardMedia
-                                sx={{ overflow: "hidden" }}
-                                className="img-fluid"
+                                sx={{
+                                  overflow: "hidden",
+                                  objectFit: "cover",
+                                  width: "100%",
+                                  height: "140px",
+                                }}
                                 component="img"
-                                image={`data:image/${items.thumbnail};base64,${items.thumbnail}`}
+                                image={`data:image/${items?.thumbnail};base64,${items?.thumbnail}`}
                                 alt="Paella dish"
                               />
                               <Box className="d-flex flex-column gap-1 px-2 py-1">
                                 <Typography
-                                  className="fw-bold fs-15"
+                                  className="text-capitalize fw-bold fs-15"
                                   variant="h6"
                                 >
-                                  {items.courseTitle}
+                                  {items?.courseTitle}
                                 </Typography>
                                 <Typography
                                   className="fs-13 text-span-2"
                                   variant="span"
                                 >
-                                  {items.brand}
+                                  {items.author}
                                 </Typography>
                                 {/* Rating Component */}
                                 <Box className="d-flex align-items-center gap-2">
@@ -253,13 +269,13 @@ const UserCoursesCards = () => {
                                     className="fs-13 fw-medium"
                                     variant="span"
                                   >
-                                    {items.rating}
+                                    {randomRatingValue}
                                   </Typography>
                                   <Rating
                                     className="text-red"
                                     size="small"
                                     name="half-rating-read"
-                                    defaultValue={2.5}
+                                    value={parseFloat(randomRatingValue)}
                                     precision={0.5}
                                     readOnly
                                   />
@@ -267,24 +283,45 @@ const UserCoursesCards = () => {
                                     className="fs-13 text-span"
                                     variant="span"
                                   >
-                                    {items.noOfRatings}
+                                    ({randomRatedUsers})
                                   </Typography>
                                 </Box>
                                 <Typography
                                   className="fs-16 fw-bold"
                                   variant="h6"
                                 >
-                                  {items.price}
+                                  ${items.coursePrice}
                                 </Typography>
+                              {/* MANAGE COURSE */}
+                              <Button
+                                onClick={() => {
+                                  setOpen(true);
+                                  // getting course id here
+                                  setCourseId(items?._id);
+                                }}
+                                className="text-capitalize mt-2"
+                                sx={{
+                                  width: "100%",
+                                  bgcolor: "#2563EB",
+                                  color: "white",
+                                  display: "flex",
+                                  gap: "5px",
+                                  mt: "auto", // Ensures alignment at bottom
+                                }}
+                              >
+                                <LayersIcon />
+                                Manage Course
+                              </Button>
                               </Box>
                             </Box>
-                          )}
-                        </Link>
-                      </Grid>
-                    );
-                  })
+                          </Grid>
+                        );
+                      })
                 )}
-              </Grid>
+                </Grid>
+                {/* CALLING THE MANAGE COURSES MODAL */}
+                <ManageCourseModal courseId={courseId} open={open} onClose={()=>setOpen(false)} />
+                
               <Box className="text-center mt-5">
                 {/* Show button only if there are more courses */}
                 {visibleCourses < filteredItems.length && (

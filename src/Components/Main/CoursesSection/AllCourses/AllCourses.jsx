@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./AllCourses.css";
 import Navbar from "../../../Header/Navbar/Navbar";
 import {
+  Autocomplete,
   Box,
   Button,
   CardMedia,
@@ -18,6 +19,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import SkeletonForAllCards from "../../../SkeletonLoading/SkeletonForAllCards";
 import getAllCourses from "../../../Store/Thunks/getAllCourses";
+import formatName from "../../../Utils/FormatName";
 
 const AllCourses = () => {
   const dispatch = useDispatch();
@@ -32,7 +34,7 @@ const AllCourses = () => {
 
   // fetch data on mount
   useEffect(() => {
-      dispatch(getAllCourses());
+    dispatch(getAllCourses());
   }, [dispatch]);
 
   // When courses are updated from Redux, reflect that in filteredItems
@@ -110,15 +112,32 @@ const AllCourses = () => {
               mt: 3,
             }}
           >
-            <TextField
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-              }}
+            <Autocomplete
               fullWidth
-              placeholder="Search any courses"
+              freeSolo // allows any input, not just from suggestions
+              options={searchTerm.length>0 ? allCourses?.filter((item)=>item.courseTitle.toLowerCase().includes(searchTerm.toLowerCase()))?.map((course) => course.courseTitle) : []}
+              inputValue={searchTerm}
+              onInputChange={(event, newInputValue) =>
+                setSearchTerm(newInputValue)
+              }
+              onChange={(event, newVal) => {
+                
+                if (typeof newVal === "string") {
+                  setSearchTerm(newVal)
+                }
+                searchFilterer()}
+              }
+              filterOptions={(options, state) =>
+                options.filter((option) =>
+                  option.toLowerCase().includes(state.inputValue.toLowerCase())
+                )
+              }
               sx={{
+                width: "100%",
+                // marginRight: "170px",
                 "& .MuiOutlinedInput-root": {
+                  height: 40,
+                  borderRadius: "5px 0 0 5px",
                   "& fieldset": {
                     border: "1px solid #6B728033",
                   },
@@ -130,17 +149,25 @@ const AllCourses = () => {
                   },
                 },
               }}
-              InputProps={{
-                startAdornment: (
-                  <SearchIcon sx={{ color: "action.active", mr: 1 }} />
-                ),
-                sx: {
-                  height: 40,
-                  marginRight: "170px",
-                  borderRadius: "5px 0 0 5px",
-                },
-              }}
+              renderInput={(params) => (
+                <TextField
+                  sx={{width:"100%",marginRight:"170px"}}
+                fullWidth
+                  {...params}
+                  placeholder="Search any courses"
+                  InputProps={{
+                    ...params.InputProps,
+                    startAdornment: (
+                      <>
+                        <SearchIcon sx={{ color: "action.active", mr: 1 }} />
+                        {params.InputProps.startAdornment}
+                      </>
+                    ),
+                  }}
+                />
+              )}
             />
+
             <Button
               disabled={loading}
               onClick={searchFilterer}
@@ -181,10 +208,16 @@ const AllCourses = () => {
               <SkeletonForAllCards />
             ) : (
               filteredItems?.slice(0, visibleCourses).map((items) => {
+                // generating random value < 5 for rating component
+                const randomRatingValue = (Math.random() * 4 + 1).toFixed(2); // it will fix it to just 2 digits
+                const randomRatedUsers = Math.ceil(Math.random() * 1000 + 1);
                 return (
                   <Grid
                     key={items.id}
-                    sx={{ borderRadius: "8px" }}
+                    sx={{
+                      borderRadius: "8px",
+                      width: "100%",
+                    }}
                     className="border bg-white"
                     item
                     size={{ xs: 12, sm: 6, lg: 3, xl: 2 }}
@@ -198,21 +231,28 @@ const AllCourses = () => {
                       ) : (
                         <Box>
                           <CardMedia
-                            sx={{ overflow: "hidden" }}
-                            className="img-fluid"
+                            sx={{
+                              overflow: "hidden",
+                              objectFit: "cover",
+                              width: "100%",
+                              height: "140px",
+                            }}
                             component="img"
-                            image={`data:image/${items.thumbnail};base64,${items.thumbnail}`}
+                            image={`data:image/${items?.thumbnail};base64,${items?.thumbnail}`}
                             alt="Paella dish"
                           />
                           <Box className="d-flex flex-column gap-1 px-2 py-1">
-                            <Typography className="fw-bold fs-15" variant="h6">
-                              {items.courseTitle}
+                            <Typography
+                              className="text-capitalize fw-bold fs-15"
+                              variant="h6"
+                            >
+                              {items?.courseTitle}
                             </Typography>
                             <Typography
                               className="fs-13 text-span-2"
                               variant="span"
                             >
-                              {items.brand}
+                              ({formatName(items.user?.username)})
                             </Typography>
                             {/* Rating Component */}
                             <Box className="d-flex align-items-center gap-2">
@@ -220,13 +260,13 @@ const AllCourses = () => {
                                 className="fs-13 fw-medium"
                                 variant="span"
                               >
-                                {items.rating}
+                                {randomRatingValue}
                               </Typography>
                               <Rating
                                 className="text-red"
                                 size="small"
                                 name="half-rating-read"
-                                defaultValue={2.5}
+                                value={parseFloat(randomRatingValue)}
                                 precision={0.5}
                                 readOnly
                               />
@@ -234,11 +274,11 @@ const AllCourses = () => {
                                 className="fs-13 text-span"
                                 variant="span"
                               >
-                                {items.noOfRatings}
+                                ({randomRatedUsers})
                               </Typography>
                             </Box>
                             <Typography className="fs-16 fw-bold" variant="h6">
-                              {items.price}
+                              ${items.coursePrice}
                             </Typography>
                           </Box>
                         </Box>

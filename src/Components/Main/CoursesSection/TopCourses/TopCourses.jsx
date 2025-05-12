@@ -12,14 +12,15 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SkeletonForCards from "../../../SkeletonLoading/SkeletonForCards";
 import getAllCourses from "../../../Store/Thunks/getAllCourses";
+import formatName from "../../../Utils/FormatName";
 
 const Courses = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     // parenthesis because it is a function
-  dispatch(getAllCourses())
-},[dispatch])
+    dispatch(getAllCourses());
+  }, [dispatch]);
 
   const { allCourses, loading } = useSelector(
     (state) => state.GetAllCoursesSlice
@@ -64,9 +65,13 @@ const Courses = () => {
               <SkeletonForCards />
             ) : (
               allCourses?.slice(0, 4)?.map((items) => {
+                // generating random value < 5 for rating component
+                const randomRatingValue = (Math.random() * 4 + 1).toFixed(2); // it will fix it to just 2 digits
+                const randomRatedUsers = Math.ceil((Math.random() * 1000 + 1))
+                
                 return (
                   <Grid
-                    sx={{ borderRadius: "8px" }}
+                    sx={{ borderRadius: "8px", width: "100%" }}
                     className="border bg-white"
                     item
                     size={{ xs: 12, sm: 6, lg: 3, xl: 2 }}
@@ -77,21 +82,28 @@ const Courses = () => {
                     >
                       <Box>
                         <CardMedia
-                          sx={{ overflow: "hidden" }}
-                          className="img-fluid"
+                          sx={{
+                            overflow: "hidden",
+                            objectFit: "cover",
+                            width: "100%",
+                            height: "140px",
+                          }}
                           component="img"
                           image={`data:image/${items?.thumbnail};base64,${items?.thumbnail}`}
                           alt="Paella dish"
                         />
                         <Box className="d-flex flex-column gap-1 px-2 py-1">
-                          <Typography className="fw-bold fs-15" variant="h6">
+                          <Typography
+                            className="text-capitalize fw-bold fs-15"
+                            variant="h6"
+                          >
                             {items?.courseTitle}
                           </Typography>
                           <Typography
                             className="fs-13 text-span-2"
                             variant="span"
                           >
-                            {items.author}
+                            ({formatName(items.user?.username)})
                           </Typography>
                           {/* Rating Component */}
                           <Box className="d-flex align-items-center gap-2">
@@ -99,13 +111,13 @@ const Courses = () => {
                               className="fs-13 fw-medium"
                               variant="span"
                             >
-                              {items.rating}
+                              {randomRatingValue}
                             </Typography>
                             <Rating
                               className="text-red"
                               size="small"
                               name="half-rating-read"
-                              defaultValue={2.5}
+                              value={parseFloat(randomRatingValue)}
                               precision={0.5}
                               readOnly
                             />
@@ -113,11 +125,11 @@ const Courses = () => {
                               className="fs-13 text-span"
                               variant="span"
                             >
-                              {items.noOfRatings}
+                              ({randomRatedUsers})
                             </Typography>
                           </Box>
                           <Typography className="fs-16 fw-bold" variant="h6">
-                            {items.Courseprice}
+                            ${items.coursePrice}
                           </Typography>
                         </Box>
                       </Box>
